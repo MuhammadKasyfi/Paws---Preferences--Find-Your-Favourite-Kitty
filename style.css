@@ -78,7 +78,7 @@ header {
 
 .like-summary {
     position: fixed;
-    top: 10%;
+    top: 5%;
     font-size: 24px;
     background: rgba(147, 234, 255, 0.8);
     padding: 10px 20px;
@@ -426,4 +426,21 @@ header {
     bottom: 50%;
     left: 10%;
     font-family: cursive;
+}
+
+.restart {
+    position: fixed;
+    text-align: center;
+    bottom: 5%;
+    margin: 5%;
+    background: rgba(147, 234, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #333;
+    font-family: cursive;
+    pointer-events: visible;
+}
+
+.restart:hover {
+    cursor: pointer;
 }

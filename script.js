@@ -5,6 +5,7 @@ const likeCounter = document.getElementById("likeCounter");
 const likeOverlay = document.getElementById('likeOverlay');
 const dislikeOverlay = document.getElementById('dislikeOverlay');
 const likeSummary = document.getElementById('likeSummary');
+const restart = document.getElementById('restart');
 const body = document.body;
 let isDragging = false;
 let startX = 0;
@@ -165,9 +166,8 @@ function showLikedImages() {
     container.style.display = 'none';
     body.style.overflow = 'auto';
     likeContainer.style.display = 'grid';
-    // likeCounter.style.display = 'block';
-    // likeCounter.textContent = `Cats you liked: ${likeCount}`;
     likeSummary.style.display = 'block';
+    restart.style.display = 'block';
     if (likeCount === 0) {
         likeSummary.textContent = "You haven't liked any cats yet... Start swiping!";
         return;
@@ -185,3 +185,5 @@ function showLikedImages() {
         likeContainer.appendChild(likeCard);
     }
 }
+
+restart.addEventListener('click', () => location.reload());
