@@ -22,6 +22,12 @@ body{
     justify-content: center;
     align-items: center;
     font-size: 48px;
-    color: rgba(0, 0, 0, 0.3)
+    color: rgba(0, 0, 0, 0.3);
     user-select: none;
+    font-size: 130px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card:not(:last-child){
+    top: 5px;
 }
