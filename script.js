@@ -16,7 +16,7 @@ const url = "https://cataas.com/cat?width=300&height=400&"
 const likeAudio = new Audio('Like.mp3');
 likeAudio.volume = 0.8;
 likeAudio.muted = false;
-const dislikeAudio = new Audio('Dislike.mp3');
+const dislikeAudio = new Audio('dislike.mp3');
 dislikeAudio.volume = 0.8;
 dislikeAudio.muted = false;
 
