@@ -2,6 +2,10 @@ const container = document.getElementById('cardContainer');
 const loadingScreen = document.getElementById('loadingScreen');
 const likeContainer = document.getElementById('likeContainer');
 const likeCounter = document.getElementById("likeCounter");
+const likeOverlay = document.getElementById('likeOverlay');
+const dislikeOverlay = document.getElementById('dislikeOverlay');
+const likeSummary = document.getElementById('likeSummary');
+const body = document.body;
 let isDragging = false;
 let startX = 0;
 let currentCard = null;
@@ -9,6 +13,18 @@ let likeCount = 0;
 let dislikeCount = 0;
 let loadedImages = 0;
 const url = "https://cataas.com/cat?width=300&height=400&"
+const likeAudio = new Audio('Like.mp3');
+likeAudio.volume = 0.8;
+likeAudio.muted = false;
+const dislikeAudio = new Audio('Dislike.mp3');
+dislikeAudio.volume = 0.8;
+dislikeAudio.muted = false;
+
+document.addEventListener('click', () => {
+    likeAudio.muted = false;
+    dislikeAudio.muted = false;
+}, { once: true });
+
 
 const catImg = [];
 const totalImages = 10;
@@ -30,10 +46,6 @@ for (let i = totalImages; i>=1; i--){
     const card = document.createElement("div");
     card.className = "card";
     card.style.backgroundImage = `url(${catImg[i-1]})`;
-    const cardContent = document.createElement("div");//remove
-    cardContent.className = "card-content"; 
-    cardContent.textContent = i; 
-    card.appendChild(cardContent);
     container.appendChild(card);
 }
 
@@ -52,10 +64,23 @@ document.addEventListener("mousemove", (e) => {
     if (!isDragging || !currentCard) return;
     const deltaX = e.clientX - startX;
     currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX/10}deg)`;
+
+    if (deltaX > 50) {
+        likeOverlay.style.opacity = 1;
+        dislikeOverlay.style.opacity = 0;
+    } else if (deltaX < -30) {
+        likeOverlay.style.opacity = 0;
+        dislikeOverlay.style.opacity = 1;
+    } else {
+        likeOverlay.style.opacity = 0;
+        dislikeOverlay.style.opacity = 0;
+    }
 });
 
 document.addEventListener("mouseup", (e) => {
     if (!isDragging || !currentCard) return;
+    likeOverlay.style.opacity = 0;
+    dislikeOverlay.style.opacity = 0;
     const deltaX = e.clientX - startX;
     handleSwipe(deltaX);
 });
@@ -72,10 +97,23 @@ document.addEventListener("touchmove", (e) => {
     if (!isDragging || !currentCard) return;
     const deltaX = e.touches[0].clientX - startX;
     currentCard.style.transform = `translateX(${deltaX}px) rotate(${deltaX/10}deg)`;
+
+    if (deltaX > 30) {
+        likeOverlay.style.opacity = 1;
+        dislikeOverlay.style.opacity = 0;
+    } else if (deltaX < -30) {
+        likeOverlay.style.opacity = 0;
+        dislikeOverlay.style.opacity = 1;
+    } else {
+        likeOverlay.style.opacity = 0;
+        dislikeOverlay.style.opacity = 0;
+    }
 });
 
 document.addEventListener("touchend", (e) => {
     if (!isDragging || !currentCard) return;
+    likeOverlay.style.opacity = 0;
+    dislikeOverlay.style.opacity = 0;
     const deltaX = e.changedTouches[0].clientX - startX;
     handleSwipe(deltaX);
 });
@@ -88,9 +126,13 @@ function handleSwipe(deltaX) {
         if (deltaX > 0) {
             likeCount++;
             updateLikeImg();
+            likeAudio.currentTime = 0;
+            likeAudio.play();
         } else {
             dislikeCount++;
             updateDislikeCount();
+            dislikeAudio.currentTime = 0;
+            dislikeAudio.play();
         }
         currentCard.style.transition = "transform 0.4s ease, opacity 0.4s ease";
         currentCard.style.transform = `translateX(${deltaX > 0 ? 1000 : -1000}px) rotate(${deltaX > 0 ? 45 : -45}deg)`;
@@ -121,9 +163,19 @@ function updateLikeImg() {
 
 function showLikedImages() {
     container.style.display = 'none';
+    body.style.overflow = 'auto';
     likeContainer.style.display = 'grid';
-    likeCounter.style.display = 'block';
-    likeCounter.textContent = `Likes: ${likeCount}`;
+    // likeCounter.style.display = 'block';
+    // likeCounter.textContent = `Cats you liked: ${likeCount}`;
+    likeSummary.style.display = 'block';
+    if (likeCount === 0) {
+        likeSummary.textContent = "You haven't liked any cats yet... Start swiping!";
+        return;
+    } else if (likeCount === 1) {
+        likeSummary.textContent = "You found the one for you!";
+    } else if (likeCount > 1) {
+        likeSummary.textContent = `Certified Cat Lover: You liked ${likeCount} cats!`;
+    }
     likeContainer.innerHTML = ""; // Clear previous images
 
     for (let i = likedImg.length-1; i >= 0; i--) {

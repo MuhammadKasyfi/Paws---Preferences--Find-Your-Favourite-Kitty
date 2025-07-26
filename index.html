@@ -5,14 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paws & Preferences: Find Your Favourite Kitty</title>
     <link rel="stylesheet" href="style.css">
-    
+    <header>
+        <div class = "logo" id = "logo">
+            <img src="catlogo.jpg" alt="Cat Logo">
+        </div>
+        Paws & Preferences: Find Your Favourite Kitty
+    </header>
 </head>
 <body>
-    <div class = "loading-screen" id= "loadingScreen">Loading cats...</div>
+    <div class = "loading-screen" id= "loadingScreen">
+        <div class="loading-cat">
+        <div class="body"></div>
+        <div class="head">
+            <div class="face"></div>
+        </div>
+        <div class="foot">
+            <div class="tummy-end">
+            </div>
+            <div class="bottom">
+            </div>
+            <div class="legs left">
+            </div>
+            <div class="legs right">
+            </div>
+        </div>
+        <div class="hands left">
+        </div>
+        <div class="hands right">
+        </div>
+        </div>
+    </div>
+    <div class = "like-summary" id = "likeSummary" style = "display:none"></div>
     <div class = "card-container" id = "cardContainer" style = "display:none"></div>
     <div class = "dislike-counter" id = "dislikeCounter"></div>
     <div class = "like-container" id = "likeContainer" style = "display:none"></div>
-    <div class = "like-counter" id = "likeCounter"></div>
+    <!-- <div class = "like-counter" id = "likeCounter" style = "display:none"></div> -->
+    <div class="like-overlay" id = "likeOverlay">
+        <div class ="like-text">
+            Swipe right to like!
+        </div>
+    </div>
+    <div class="dislike-overlay" id = "dislikeOverlay">
+        <div class ="dislike-text">
+            Swipe left to dislike..
+        </div>
+    </div>
     <script src="script.js"></script>
+    
 </body>
 </html>
