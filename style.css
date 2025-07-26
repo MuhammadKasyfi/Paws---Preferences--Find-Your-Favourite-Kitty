@@ -4,12 +4,13 @@ body{
     align-items: center;
     height: 100vh;
     background: #f0f0f0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .card-container{
     width: 300px;
     height: 400px;
+    display: flex;
     position: relative;
 }
 
@@ -29,5 +30,57 @@ body{
 }
 
 .card:not(:last-child){
+    top: 5px;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 24px;
+    color: #333;
+}
+
+.like-counter{
+    position: fixed;
+    bottom: 50px;
+    font-size: 24px;
+    color: #333;
+}
+
+.dislike-counter {
+    position: fixed;
+    left: 50px;
+    font-size: 24px;
+    color: #333;
+    display: none;
+}
+
+.like-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+    width: 90vw;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 0;
+    background: none;
+}
+
+.like-card{
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.like-card:not(:last-child){
     top: 5px;
 }
